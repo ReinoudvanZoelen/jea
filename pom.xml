@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.wildfly.quickstarts</groupId>
-        <artifactId>quickstart-parent</artifactId>
-        <!--
-        Maintain separation between the artifact id and the version to help prevent
-        merge conflicts between commits changing the GA and those changing the V.
-        -->
-        <version>17.0.0.Beta1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
     <artifactId>helloworld-rs</artifactId>
     <packaging>war</packaging>
     <name>Quickstart: helloworld-rs</name>
+    <groupId>reinoud</groupId>
+    <version>1</version>
     <description>A simple Hello World project that uses JAX-RS</description>
 
     <licenses>
@@ -28,31 +20,38 @@
     <dependencies>
 
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss EAP -->
+        <!-- https://mvnrepository.com/artifact/javax.enterprise/cdi-api -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
+            <version>2.0</version>
             <scope>provided</scope>
         </dependency>
+
 
         <!-- Import the Common Annotations API (JSR-250), we use provided scope
             as the API is included in JBoss EAP -->
+        <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.annotation/jboss-annotations-api_1.3_spec -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.3_spec</artifactId>
-            <scope>provided</scope>
+            <version>1.0.1.Final</version>
         </dependency>
 
+
         <!-- Import the JAX-RS API, we use provided scope as the API is included in JBoss EAP -->
+        <!-- https://mvnrepository.com/artifact/org.jboss.spec.javax.ws.rs/jboss-jaxrs-api_2.1_spec -->
         <dependency>
             <groupId>org.jboss.spec.javax.ws.rs</groupId>
             <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
-            <scope>provided</scope>
+            <version>1.0.2.Final</version>
         </dependency>
+
     </dependencies>
 
-  <build>
+    <build>
         <finalName>helloworld-rs</finalName>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>            <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
                     <groupId>org.wildfly.plugins</groupId>
