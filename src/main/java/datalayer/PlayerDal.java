@@ -1,7 +1,7 @@
 package datalayer;
 
 import java.util.List;
-
+import javax.enterprise.context.ApplicationScoped;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,13 +9,15 @@ import javax.transaction.UserTransaction;
 
 import models.Player;
 
+@ApplicationScoped
 public class PlayerDal implements IPlayerDal {
 
     @PersistenceContext(unitName = "MasterPU")
     private EntityManager entityManager;
 
     @Resource
-    private UserTransaction transaction;
+    private UserTransaction  transaction;
+
 
     @Override
     public void add(Player entity) {

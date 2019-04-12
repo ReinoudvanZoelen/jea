@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import models.Player;
 import datalayer.IPlayerDal;
+import datalayer.PlayerDal;
 
 @ApplicationScoped
 public class PlayerService {
