@@ -26,16 +26,6 @@ public class PlayerEndpoint {
     }
 
     @GET
-    @Path("/emailaddress/{emailAddress}")
-    public Response getByEmailAddress(@PathParam("emailAddress") String emailAddress) {
-        Player player = service.getByEmailAddress(emailAddress);
-        // if (player == null) {
-        //     return Response.status(Status.NOT_FOUND).build();
-        // }
-        return Response.ok().entity(player).build();
-    }
-
-    @GET
     public Response getAll() {
         return Response.ok().entity(service.getAll()).build();
     }
