@@ -1,18 +1,14 @@
 package endpoints;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.Status;
 
 import datalayer.IPlayerDal;
-import datalayer.PlayerDal;
-import models.Player;
+import entities.Player;
 
-@Path("/player")
+@Path("/players")
 @Produces(MediaType.APPLICATION_JSON)
 public class PlayerEndpoint {
 
@@ -20,22 +16,34 @@ public class PlayerEndpoint {
     IPlayerDal service;
 
     @GET
-    @Path("")
-    public String getSlash() {
-        return "{\"result\":\"" + "it works!" + "\"}";
-    }
-
-    @GET
-    @Path("/{id}")
+    @Path("/id/{id}")
     public Response getById(@PathParam("id") int id) {
         Player player = service.getById(id);
+        if (player == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
         return Response.ok().entity(player).build();
     }
 
     @GET
-    @Path("/mock/{id}")
-    public Response getMockById(@PathParam("id") int id) {
-        Player player = new Player("Reinoud van Zoelen", "reinoudvanzoelen@gmail.com", "myfakepassword", "ADMIN");
+    @Path("/emailaddress/{emailAddress}")
+    public Response getByEmailAddress(@PathParam("emailAddress") String emailAddress) {
+        Player player = service.getByEmailAddress(emailAddress);
+        // if (player == null) {
+        //     return Response.status(Status.NOT_FOUND).build();
+        // }
         return Response.ok().entity(player).build();
+    }
+
+    @GET
+    public Response getAll() {
+        return Response.ok().entity(service.getAll()).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response save(Player player) {
+        service.add(player);
+        return Response.ok().build();
     }
 }

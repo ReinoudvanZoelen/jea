@@ -1,9 +1,6 @@
-package models;
+package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "tbl_Player")
 public class Player {
@@ -20,12 +17,14 @@ public class Player {
     public Player() {
     }
 
-    public Player(String fullName, String emailAddress, String password, String role) {
-        FullName = fullName;
-        EmailAddress = emailAddress;
-        Password = password;
-        Role = role;
+    public Player(String fullName, String emailAddress, String password) {
+        this.FullName = fullName;
+        this.EmailAddress = emailAddress;
+        this.Password = password;
+        this.Role = "NONE";
     }
+
+    // Getters and Setters
 
     public int getId() {
         return Id;
@@ -58,6 +57,14 @@ public class Player {
     public void setPassword(String password) {
         Password = password;
     }
+
+    // public List<Team> getTeams() {
+    // return Teams;
+    // }
+
+    // public void setTeams(List<Team> teams) {
+    // Teams = teams;
+    // }
 
     public String getRole() {
         return Role;

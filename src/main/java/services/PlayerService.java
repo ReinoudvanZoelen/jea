@@ -3,9 +3,8 @@ package services;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 
-import models.Player;
+import entities.Player;
 import datalayer.IPlayerDal;
-import datalayer.PlayerDal;
 
 @ApplicationScoped
 public class PlayerService {

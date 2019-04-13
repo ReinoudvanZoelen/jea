@@ -1,6 +1,6 @@
 package datalayer;
 
-import models.Player;
+import entities.Player;
 
 public interface IPlayerDal extends ICrudService<Player> {
     Player getByEmailAddress(String emailAddress);
