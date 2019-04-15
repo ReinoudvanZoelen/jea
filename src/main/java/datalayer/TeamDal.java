@@ -7,10 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
-import entities.Player;
+import entities.Team;
 
 @ApplicationScoped
-public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
+public class TeamDal extends GenericDal<Team> implements ITeamDal {
 
     @PersistenceContext(unitName = "MasterPU")
     private EntityManager entityManager;
@@ -19,42 +19,33 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
     private UserTransaction transaction;
 
     @Override
-    public Player getById(int id) {
-        Player player = null;
+    public Team getById(int id) {
+        Team team = null;
         try {
             transaction.begin();
 
-            player = entityManager.find(Player.class, id);
+            team = entityManager.find(Team.class, id);
 
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return player;
+        return team;
     }
 
     @Override
-    public List<Player> getAll() {
-        List<Player> players = null;
+    public List<Team> getAll() {
+        List<Team> teams = null;
         try {
             transaction.begin();
 
-            players = entityManager.createQuery("SELECT p FROM tbl_Player p").getResultList();
+            teams = entityManager.createQuery("SELECT t FROM tbl_Team t").getResultList();
 
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return players;
+        return teams;
     }
 
-    @Override
-    public Player getByEmailAddress(String emailAddress) {
-        return null;
-    }
-
-    @Override
-    public Player authenticate(String username, String password) {
-        return null;
-    }
 }

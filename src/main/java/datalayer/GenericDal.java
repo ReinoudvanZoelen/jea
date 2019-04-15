@@ -1,16 +1,13 @@
 package datalayer;
 
-import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
-import entities.Player;
-
 @ApplicationScoped
-public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
+public abstract class GenericDal<T> implements ICrudService<T> {
 
     @PersistenceContext(unitName = "MasterPU")
     private EntityManager entityManager;
@@ -19,42 +16,47 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
     private UserTransaction transaction;
 
     @Override
-    public Player getById(int id) {
-        Player player = null;
+    public void add(T entity) {
         try {
             transaction.begin();
 
-            player = entityManager.find(Player.class, id);
+            entityManager.persist(entity);
 
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return player;
+
     }
 
     @Override
-    public List<Player> getAll() {
-        List<Player> players = null;
+    public void update(T entity) {
         try {
             transaction.begin();
 
-            players = entityManager.createQuery("SELECT p FROM tbl_Player p").getResultList();
+            entityManager.persist(entity);
 
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return players;
     }
 
     @Override
-    public Player getByEmailAddress(String emailAddress) {
-        return null;
+    public void delete(T entity) {
+        try {
+            transaction.begin();
+
+            entityManager.remove(entity);
+
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Player authenticate(String username, String password) {
-        return null;
+    public void delete(int id) {
+        this.delete(this.getById(id));
     }
 }

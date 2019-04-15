@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity(name = "tbl_Player")
@@ -11,7 +13,8 @@ public class Player {
     private String FullName;
     private String EmailAddress;
     private String Password;
-    // private List<Team> Teams;
+    @ManyToMany(mappedBy = "Players")
+    private List<Team> Teams;
     private String Role;
 
     public Player() {
@@ -58,13 +61,13 @@ public class Player {
         Password = password;
     }
 
-    // public List<Team> getTeams() {
-    // return Teams;
-    // }
+    public List<Team> getTeams() {
+    return Teams;
+    }
 
-    // public void setTeams(List<Team> teams) {
-    // Teams = teams;
-    // }
+    public void setTeams(List<Team> teams) {
+    Teams = teams;
+    }
 
     public String getRole() {
         return Role;
