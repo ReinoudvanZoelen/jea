@@ -36,4 +36,16 @@ public class PlayerEndpoint {
         service.add(player);
         return Response.ok().build();
     }
+
+    @POST
+    @Path("/mock")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response mock() {
+        Player player = new Player("Reinoud", "reinoud@mail.com", "password1234");
+        Player player2 = new Player("Niels", "niels@mail.com", "sulley1263");
+        service.add(player);
+        service.add(player2);
+
+        return Response.ok().build();
+    }
 }

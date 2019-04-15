@@ -8,72 +8,72 @@ import javax.persistence.*;
 public class Player {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
-    private String FullName;
-    private String EmailAddress;
-    private String Password;
+    @GeneratedValue()
+    private int id;
+    private String fullName;
+    private String emailAddress;
+    private String password;
     @ManyToMany(mappedBy = "Players")
-    private List<Team> Teams;
-    private String Role;
+    private List<Team> teams;
+    private String role;
 
     public Player() {
     }
 
     public Player(String fullName, String emailAddress, String password) {
-        this.FullName = fullName;
-        this.EmailAddress = emailAddress;
-        this.Password = password;
-        this.Role = "NONE";
+        this.fullName = fullName;
+        this.emailAddress = emailAddress;
+        this.password = password;
+        this.role = "NONE";
     }
 
     // Getters and Setters
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getFullName() {
-        return FullName;
+        return fullName;
     }
 
     public void setFullName(String fullName) {
-        FullName = fullName;
+        this.fullName = fullName;
     }
 
     public String getEmailAddress() {
-        return EmailAddress;
+        return emailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
-        EmailAddress = emailAddress;
+        this.emailAddress = emailAddress;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public List<Team> getTeams() {
-    return Teams;
+        return teams;
     }
 
     public void setTeams(List<Team> teams) {
-    Teams = teams;
+        this.teams = teams;
     }
 
     public String getRole() {
-        return Role;
+        return role;
     }
 
     public void setRole(String role) {
-        Role = role;
+        this.role = role;
     }
 }

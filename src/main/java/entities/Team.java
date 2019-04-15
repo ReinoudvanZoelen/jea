@@ -7,31 +7,23 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
-    @ManyToMany(cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    })
-    @JoinTable(name = "tbl_Team_Player",
-        joinColumns = @JoinColumn(name = "team_id"),
-        inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
+    @GeneratedValue()
+    private int id;
+    private String name;
+    @ManyToMany
+    @JoinTable(name = "tbl_Players_In_Team", joinColumns = @JoinColumn(name = "team_Id", referencedColumnName = "Id"), inverseJoinColumns = @JoinColumn(name = "player_Id", referencedColumnName = "Id"))
     private List<Player> Players;
-    // @OneToMany
-    // private List<TeamScore> TeamScores;
 
     public Team() {
     }
 
     // Getters and Setters
-
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public List<Player> getPlayers() {
@@ -39,14 +31,14 @@ public class Team {
     }
 
     public void setPlayers(List<Player> players) {
-        Players = players;
+        this.Players = players;
     }
 
-    // public List<TeamScore> getTeamScores() {
-    //     return TeamScores;
-    // }
+    public String getName() {
+        return this.name;
+    }
 
-    // public void setTeamScores(List<TeamScore> teamScores) {
-    //     TeamScores = teamScores;
-    // }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

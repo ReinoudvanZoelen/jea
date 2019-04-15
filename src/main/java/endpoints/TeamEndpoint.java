@@ -3,7 +3,6 @@ package endpoints;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import javax.ws.rs.core.Response.Status;
 
 import datalayer.IPlayerDal;
 import datalayer.ITeamDal;
@@ -16,7 +15,7 @@ public class TeamEndpoint {
     @Inject
     ITeamDal service;
 
-    @Inject 
+    @Inject
     IPlayerDal playerService;
 
     @GET
@@ -39,10 +38,12 @@ public class TeamEndpoint {
 
     @POST
     @Path("/mock")
-    public Response saveMock(){
+    public Response saveMock() {
         Team t = new Team();
+        t.setName("Team Super Saiyan");
         t.setPlayers(playerService.getAll());
         this.service.add(t);
+
         return Response.ok().build();
     }
 }
