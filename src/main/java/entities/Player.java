@@ -1,6 +1,7 @@
 package entities;
 
-import java.util.List;
+import entities.Team;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -13,9 +14,10 @@ public class Player {
     private String fullName;
     private String emailAddress;
     private String password;
-    @ManyToMany(mappedBy = "Players")
-    private List<Team> teams;
     private String role;
+    @ManyToOne
+    @JsonBackReference
+    private Team team;
 
     public Player() {
     }
@@ -61,19 +63,19 @@ public class Player {
         this.password = password;
     }
 
-    public List<Team> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

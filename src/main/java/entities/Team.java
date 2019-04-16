@@ -1,7 +1,11 @@
 package entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
+import entities.Player;
 
 @Entity(name = "tbl_Team")
 public class Team {
@@ -10,9 +14,9 @@ public class Team {
     @GeneratedValue()
     private int id;
     private String name;
-    @ManyToMany
-    @JoinTable(name = "tbl_Players_In_Team", joinColumns = @JoinColumn(name = "team_Id", referencedColumnName = "Id"), inverseJoinColumns = @JoinColumn(name = "player_Id", referencedColumnName = "Id"))
-    private List<Player> Players;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Player> players;
 
     public Team() {
     }
@@ -27,11 +31,11 @@ public class Team {
     }
 
     public List<Player> getPlayers() {
-        return Players;
+        return players;
     }
 
     public void setPlayers(List<Player> players) {
-        this.Players = players;
+        this.players = players;
     }
 
     public String getName() {
