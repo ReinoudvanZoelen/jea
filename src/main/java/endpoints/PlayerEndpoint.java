@@ -38,14 +38,17 @@ public class PlayerEndpoint {
     }
 
     @POST
-    @Path("/mock")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response mock() {
-        Player player = new Player("Reinoud", "reinoud@mail.com", "password1234");
-        Player player2 = new Player("Niels", "niels@mail.com", "sulley1263");
+    public Response add(Player player) {
         service.add(player);
-        service.add(player2);
+        return Response.ok().build();
+    }
 
+    @POST
+    @Path("/update")
+    public Response update(Player player){
+        service.update(player);
         return Response.ok().build();
     }
 }

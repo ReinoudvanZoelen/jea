@@ -34,7 +34,7 @@ public abstract class GenericDal<T> implements ICrudService<T> {
         try {
             transaction.begin();
 
-            entityManager.persist(entity);
+            entityManager.merge(entity);
 
             transaction.commit();
         } catch (Exception e) {

@@ -30,9 +30,17 @@ public class TeamEndpoint {
     }
 
     @POST
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(Team team) {
+    public Response add(Team team) {
         service.add(team);
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/update")
+    public Response update(Team team){
+        service.update(team);
         return Response.ok().build();
     }
 
