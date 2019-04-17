@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 
 import entities.Player;
@@ -54,7 +55,15 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
     }
 
     @Override
-    public Player authenticate(String username, String password) {
+    public Player authenticate(String emailAddress, String password) {
+        Object result = entityManager
+                .createQuery("SELECT player FROM tbl_Player player WHERE player.emailAddress=:emailAddress AND player.password=:password")
+                .setParameter("emailAddress", emailAddress).setParameter("password", password).getSingleResult();
+
+        if (result != null) {
+            Player player = (Player) result;
+            return player;
+        }
         return null;
     }
 }

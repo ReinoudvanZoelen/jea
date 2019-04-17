@@ -31,17 +31,10 @@ public class PlayerEndpoint {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response save(Player player) {
-        service.add(player);
-        return Response.ok().build();
-    }
-
-    @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(Player player) {
-        service.add(player);
+        service.update(player);
         return Response.ok().build();
     }
 
