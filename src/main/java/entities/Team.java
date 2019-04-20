@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -17,6 +18,10 @@ public class Team {
     @OneToMany(fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Player> players;
+
+    // Hateoas
+    @Transient
+    private Link self;
 
     public Team() {
     }
@@ -44,5 +49,13 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Link getLink() {
+        return this.self;
+    }
+
+    public void setLink(Link link) {
+        this.self = link;
     }
 }

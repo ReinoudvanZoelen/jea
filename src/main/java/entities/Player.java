@@ -3,7 +3,10 @@ package entities;
 import entities.Team;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import java.net.URI;
+
 import javax.persistence.*;
+import javax.ws.rs.core.Link;
 
 @Entity(name = "tbl_Player")
 public class Player {
@@ -18,6 +21,10 @@ public class Player {
     @ManyToOne
     @JsonBackReference
     private Team team;
+
+    // Hateoas
+    @Transient
+    private Link self;
 
     public Player() {
     }
@@ -77,5 +84,13 @@ public class Player {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public Link getLink() {
+        return this.self;
+    }
+
+    public void setLink(Link link) {
+        this.self = link;
     }
 }

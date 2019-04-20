@@ -1,5 +1,7 @@
 package endpoints;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -15,6 +17,10 @@ public class PlayerEndpoint {
     @Inject
     IPlayerDal service;
 
+    // Hateoas
+    @Context
+    UriInfo uriInfo;
+
     @GET
     @Path("/id/{id}")
     public Response getById(@PathParam("id") int id) {
@@ -22,12 +28,18 @@ public class PlayerEndpoint {
         if (player == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
+        player.setLink(Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("GET").build());
+
         return Response.ok().entity(player).build();
     }
 
     @GET
     public Response getAll() {
-        return Response.ok().entity(service.getAll()).build();
+        List<Player> players = service.getAll();
+        for (Player player : players) {
+            player.setLink(Link.fromUri(uriInfo.getAbsolutePath()).rel("self").type("GET").build());
+        }
+        return Response.ok().entity(players).build();
     }
 
     @POST
@@ -40,7 +52,7 @@ public class PlayerEndpoint {
 
     @POST
     @Path("/update")
-    public Response update(Player player){
+    public Response update(Player player) {
         service.update(player);
         return Response.ok().build();
     }
