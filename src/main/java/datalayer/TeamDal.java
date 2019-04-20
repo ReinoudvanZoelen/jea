@@ -1,5 +1,6 @@
 package datalayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.annotation.Resource;
@@ -35,12 +36,18 @@ public class TeamDal extends GenericDal<Team> implements ITeamDal {
 
     @Override
     public List<Team> getAll() {
-        List<Team> teams = null;
+        List<Team> teams = new ArrayList<Team>();
         try {
             transaction.begin();
 
-            teams = entityManager.createQuery("SELECT t FROM tbl_Team t").getResultList();
+            @SuppressWarnings("unchecked")
+            Iterable<Object> result = entityManager.createQuery("SELECT t FROM tbl_Team t").getResultList();
 
+            if (result != null) {
+                for (Object object : result) {
+                    teams.add((Team) object);
+                }
+            }
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
