@@ -82,6 +82,14 @@
         </dependency>
         <!-- End JWT -->
 
+        <!-- OAUTH2 -->
+        <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client</artifactId>
+            <version>1.28.0</version>
+        </dependency>
+        <!-- End OAUTH2 -->
     </dependencies>
 
     <build>
