@@ -1,21 +1,32 @@
 package endpoints;
 
+import java.net.URI;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.OAuthRequest;
+import com.github.scribejava.core.model.Verb;
 
 import datalayer.IPlayerDal;
 import entities.Player;
 import models.Authentication;
+import services.GoogleService;
 import services.JwtService;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/auth")
 public class AuthenticationEndpoint {
+    @Inject
+    GoogleService googleService;
 
     @Inject
     IPlayerDal service;
@@ -38,4 +49,28 @@ public class AuthenticationEndpoint {
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
+
+    @GET
+    @Path("/google")
+    public Response getGoogleAuth() {
+        String path = googleService.getService().getAuthorizationUrl();
+        return Response.temporaryRedirect(URI.create(path)).build();
+    }
+
+    @GET
+    @Path("/google/authenticate")
+    public Response getAuthenticateGoogle(@QueryParam("code") String code) {
+        try {
+            OAuth2AccessToken token = googleService.getService().getAccessToken(code);
+
+            OAuthRequest request = new OAuthRequest(Verb.GET, "https://www.googleapis.com/oauth2/v2/userinfo");
+            googleService.getService().signRequest(token, request);
+            com.github.scribejava.core.model.Response response = googleService.getService().execute(request);
+            return Response.status(Response.Status.ACCEPTED).entity(response.getBody()).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.getStackTrace()).build();
+        }
+    }
+
 }
