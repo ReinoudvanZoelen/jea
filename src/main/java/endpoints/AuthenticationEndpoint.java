@@ -3,6 +3,7 @@ package endpoints;
 import java.net.URI;
 
 import javax.inject.Inject;
+import javax.json.JsonString;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,7 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+
+import org.json.JSONObject;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.github.scribejava.core.model.OAuthRequest;
@@ -42,7 +46,12 @@ public class AuthenticationEndpoint {
             Player player = service.authenticate(authentication.getEmailAddress(), authentication.getPassword());
             if (player != null) {
                 String token = jwtService.createJwt(player.getEmailAddress(), player.getRole());
-                return Response.ok((token)).build();
+                NewCookie cookie = new NewCookie("access_token", token);
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("access_token", token);
+
+                return Response.ok().cookie(cookie).entity(jsonObject.toString()).build();
             }
         } catch (Exception e) {
             e.printStackTrace();
