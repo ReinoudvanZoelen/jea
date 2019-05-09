@@ -22,11 +22,13 @@ public class Player {
     public Player() {
     }
 
-    public Player(String fullName, String emailAddress, String password) {
+    public Player(int id, String fullName, String emailAddress, String password, String role, Team team) {
+        this.id = id;
         this.fullName = fullName;
         this.emailAddress = emailAddress;
         this.password = password;
-        this.role = "NONE";
+        this.role = role;
+        this.team = team;
     }
 
     // Getters and Setters
@@ -78,4 +80,12 @@ public class Player {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", fullName='" + getFullName() + "'" + ", emailAddress='"
+                + getEmailAddress() + "'" + ", password='" + getPassword() + "'" + ", role='" + getRole() + "'"
+                + ", team='" + getTeam() + "'" + "}";
+    }
+
 }
