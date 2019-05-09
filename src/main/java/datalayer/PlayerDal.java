@@ -47,7 +47,6 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
                 for (Object object : result) {
                     players.add((Player) object);
                 }
-                return players;
             }
 
             transaction.commit();
@@ -59,7 +58,24 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
 
     @Override
     public Player getByEmailAddress(String emailAddress) {
-        return null;
+        Player player = new Player();
+
+        try {
+            transaction.begin();
+
+            Object result = entityManager
+                    .createQuery("SELECT player FROM tbl_Player player WHERE player.emailAddress=:emailAddress")
+                    .setParameter("emailAddress", emailAddress).getSingleResult();
+
+            if (result != null) {
+                player = (Player) result;
+            }
+
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return player;
     }
 
     @Override
@@ -75,7 +91,6 @@ public class PlayerDal extends GenericDal<Player> implements IPlayerDal {
 
             if (result != null) {
                 player = (Player) result;
-                return player;
             }
 
             transaction.commit();
