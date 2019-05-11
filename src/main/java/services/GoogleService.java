@@ -1,29 +1,31 @@
 package services;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
-import com.github.scribejava.apis.GoogleApi20;
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth20Service;
+import models.GoogleAuthentication;
 
 public class GoogleService {
 
-    private OAuth20Service service;
-    private final String API_KEY = "1007737378302-29hfrihbgg06q0c16i3er12f2pnf5cvt.apps.googleusercontent.com";
-    private final String API_SECRET = "XmoG14YsrwrKbrXy1yoBap9s";
-    private final String SCOPE = "https://www.googleapis.com/auth/userinfo.email";
-    private final String CALLBACK = "http://localhost:8080/helloworld-rs/rest/auth/google/authenticate";
+    private final String BASE_URL_VERIFICATION = "https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=";
 
-    public GoogleService() {
-        this.service = new ServiceBuilder(API_KEY).apiSecret(API_SECRET).withScope(SCOPE).callback(CALLBACK)
-                .build(GoogleApi20.instance());
-    }
+    public boolean verifyGoogleAuthentication(GoogleAuthentication googleAuthentication) {
+        try {
+            URL url = new URL(this.BASE_URL_VERIFICATION + googleAuthentication.getAccessToken());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json");
 
-    public OAuth20Service getService() {
-        return service;
+            int code = connection.getResponseCode();
+
+            connection.disconnect();
+
+            return code == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

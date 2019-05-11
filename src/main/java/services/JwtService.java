@@ -1,5 +1,6 @@
 package services;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class JwtService {
     private static final String ISSUER = "webappjeaapi";
     private static final String AUDIENCE = "webappjea";
 
-    public String createJwt(final Player player) throws Exception {
+    public String createJwt(final Player player) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
 
@@ -34,7 +35,7 @@ public class JwtService {
                     .withClaim("name", player.getFullName()).sign(algorithm);
 
             return token;
-        } catch (JWTCreationException exception) {
+        } catch (JWTCreationException | IllegalArgumentException | UnsupportedEncodingException exception) {
             // Invalid Signing configuration / Couldn't convert Claims.
         }
 
