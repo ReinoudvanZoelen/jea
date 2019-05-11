@@ -30,9 +30,15 @@ public class JwtService {
             calendar.add(Calendar.SECOND, TOKEN_VALIDITY);
             var exp = calendar.getTime();
 
-            String token = JWT.create().withSubject(player.getEmailAddress()).withIssuer(ISSUER).withAudience(AUDIENCE)
-                    .withIssuedAt(iat).withExpiresAt(exp).withClaim("role", player.getRole())
-                    .withClaim("name", player.getFullName()).sign(algorithm);
+            String token = JWT.create()
+                .withSubject(player.getEmailAddress())
+                .withIssuer(ISSUER)
+                .withAudience(AUDIENCE)
+                .withIssuedAt(iat)
+                .withExpiresAt(exp)
+                .withClaim("role", player.getRole())
+                .withClaim("name", player.getFullName())
+                .sign(algorithm);
 
             return token;
         } catch (JWTCreationException | IllegalArgumentException | UnsupportedEncodingException exception) {

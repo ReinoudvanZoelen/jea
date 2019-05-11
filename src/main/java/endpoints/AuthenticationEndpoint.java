@@ -38,7 +38,6 @@ public class AuthenticationEndpoint {
             Player player = playerService.authenticate(authentication.getEmailAddress(), authentication.getPassword());
             if (player != null) {
                 String token = jwtService.createJwt(player);
-                // NewCookie cookie = new NewCookie("access_token", token);
 
                 // Create JSON of JWT
                 Gson gson = new Gson();
