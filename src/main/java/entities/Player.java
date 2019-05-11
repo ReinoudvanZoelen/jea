@@ -4,6 +4,9 @@ import entities.Team;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity(name = "tbl_Player")
 public class Player {
@@ -11,10 +14,20 @@ public class Player {
     @Id
     @GeneratedValue()
     private int id;
+
+    @NotEmpty(message = "Please enter a valid name for this player.")
     private String fullName;
+
+    @Email(message = "Please enter a valid email address for this player.")
     private String emailAddress;
+
+    @NotEmpty
+    @Size(min = 8, message = "Please enter a valid password for this player. A password must be at least 8 characters long.")
     private String password;
+
+    @NotEmpty
     private String role;
+    
     @ManyToOne
     @JsonBackReference
     private Team team;

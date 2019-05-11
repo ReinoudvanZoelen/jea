@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -13,8 +15,12 @@ public class Team {
     @Id
     @GeneratedValue()
     private int id;
+
+    @NotEmpty(message = "Please enter a valid name for this team.")
     private String name;
+    
     @OneToMany(fetch = FetchType.EAGER)
+    @Size(min = 2, max = 2, message = "Please enter valid players for this team. A Team consists of exactly two players.")
     @JsonManagedReference
     private List<Player> players;
 
