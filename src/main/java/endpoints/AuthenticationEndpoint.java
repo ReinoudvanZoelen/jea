@@ -1,6 +1,7 @@
 package endpoints;
 
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,6 +14,7 @@ import com.google.gson.JsonObject;
 
 import datalayer.IPlayerDal;
 import entities.Player;
+import interceptors.MethodTimingInterceptor;
 import models.Authentication;
 import models.GoogleAuthentication;
 import services.GoogleService;
@@ -32,6 +34,7 @@ public class AuthenticationEndpoint {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Interceptors(MethodTimingInterceptor.class)
     public Response postJWT(Authentication authentication) {
 
         try {
