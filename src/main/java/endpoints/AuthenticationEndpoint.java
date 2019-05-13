@@ -34,7 +34,6 @@ public class AuthenticationEndpoint {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Interceptors(MethodTimingInterceptor.class)
     public Response postJWT(Authentication authentication) {
 
         try {

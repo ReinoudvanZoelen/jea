@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import entities.Player;
 
@@ -46,5 +47,13 @@ public class JwtService {
         }
 
         return "";
+    }
+
+    public boolean VerifyJWT(String token) {
+        DecodedJWT jwt = JWT.decode(token);
+        Date expirationDate = jwt.getExpiresAt();
+        JWT.decode(token).getExpiresAt().compareTo(new Date());
+
+        return expirationDate.compareTo(new Date()) > 0;
     }
 }
