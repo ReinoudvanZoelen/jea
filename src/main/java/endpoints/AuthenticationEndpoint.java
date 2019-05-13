@@ -1,7 +1,6 @@
 package endpoints;
 
 import javax.inject.Inject;
-import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,9 +13,9 @@ import com.google.gson.JsonObject;
 
 import datalayer.IPlayerDal;
 import entities.Player;
-import interceptors.MethodTimingInterceptor;
 import models.Authentication;
 import models.GoogleAuthentication;
+import models.Token;
 import services.GoogleService;
 import services.JwtService;
 
@@ -77,7 +76,8 @@ public class AuthenticationEndpoint {
 
             if (player != null) {
                 String token = jwtService.createJwt(player);
-                return Response.status(Response.Status.ACCEPTED).entity(token).build();
+                Gson gson = new Gson();
+                return Response.status(Response.Status.ACCEPTED).entity(gson.toJson(new Token(token))).build();
             }
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();

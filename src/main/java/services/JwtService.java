@@ -49,7 +49,7 @@ public class JwtService {
         return "";
     }
 
-    public boolean VerifyJWT(String token) {
+    public boolean verify(String token) {
         DecodedJWT jwt = JWT.decode(token);
         Date expirationDate = jwt.getExpiresAt();
         JWT.decode(token).getExpiresAt().compareTo(new Date());
