@@ -69,6 +69,7 @@
 
         <!--JWT-->
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <!-- GSON is also needed for WebSockets -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -109,6 +110,13 @@
         </dependency>
         <!-- End OAUTH2 -->
 
+        <!-- Start WebSockets -->
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- End WebSockets -->
 
     </dependencies>
 
